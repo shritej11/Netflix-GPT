@@ -1,11 +1,14 @@
-import { useState } from 'react'
-import './App.css'
+import './index.css'
+import Body from './components/Body'
 
 function App() {
   
 
   return (
-   sf
+    <div>
+        <Body/>
+    </div>
+ 
   )
 }
 
