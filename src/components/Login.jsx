@@ -1,18 +1,71 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidateData } from "../utils/validate";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utils/firebase"
+import { useNavigate } from "react-router-dom";
+
+
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
-  const [errorMessage, setErrorMessage] =useState(null);
-
+  const [errorMessage, setErrorMessage] = useState(null);
+  const navigate = useNavigate();
   const email = useRef(null);
   const password = useRef(null);
 
   const handleButtonClick = () => {
-    const message =  checkValidateData(email.current.value, password.current.value); 
-    // console.log(message);
+    const message = checkValidateData(email.current.value, password.current.value);
     setErrorMessage(message);
+
+    if (message) return;
+    //sign in/ sign up
+
+    if (!isSignInForm) {
+      //sign up logic
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up 
+          const user = userCredential.user;
+          console.log(user)
+          navigate("/browse") 
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+          setErrorMessage(errorCode + "- " + errorMessage)
+        });
+
+    }
+    else {
+      //sign in logic
+
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+        )
+        .then((userCredential) => {
+          // Signed in 
+          const user = userCredential.user;
+          console.log(user)
+          navigate("/browse") 
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "- " + errorMessage)
+        });
+
+    };
+
+
+
   }
 
   const toggleSignInForm = () => {
@@ -22,7 +75,7 @@ const Login = () => {
   return (
     <div className="relative min-h-screen">
       <Header />
-     
+
       <div className="absolute inset-0">
         <img
           src="https://assets.nflxext.com/ffe/siteui/vlv3/638e9299-0637-42d1-ba39-54ade4cf2bf6/web/IN-en-20250203-TRIFECTA-perspective_46eb8857-face-4ea6-b901-dbf22b461369_large.jpg"
@@ -31,18 +84,18 @@ const Login = () => {
         />
       </div>
 
-      
+
       <div className=" flex justify-center items-center min-h-screen relative">
-        
-        <form 
-        
-        onSubmit={ (e) => e.preventDefault() }
-        className="w-full min-h-[400px]  max-w-md p-10 bg-black/75 text-white rounded-lg">
-          <h1 
-          className="caret-transparent text-3xl font-bold py-6">
-            {isSignInForm 
-            ? "Sign In" 
-            : "Sign Up"}
+
+        <form
+
+          onSubmit={(e) => e.preventDefault()}
+          className="w-full min-h-[500px]  max-w-md p-10 bg-black/80 text-white rounded-4xl">
+          <h1
+            className="caret-transparent text-3xl font-bold py-8">
+            {isSignInForm
+              ? "Sign In"
+              : "Sign Up"}
           </h1>
 
           {!isSignInForm && (
@@ -57,7 +110,7 @@ const Login = () => {
             ref={email}
             type="text"
             placeholder="Email Address"
-            className="bg-gray-700 p-3 px-3 w-90 rounded-lg mb-8"
+            className="bg-gray-700 p-3 px-3  w-90 rounded-lg mb-8"
           />
 
           <input
@@ -66,23 +119,23 @@ const Login = () => {
             placeholder="Password"
             className="bg-gray-700 p-3  px-3 w-90 rounded-lg mb-8"
           />
-          
+
           <p className="font-semibold text-white text-sm py-2 mb-1.5">{errorMessage}</p>
 
-          <button 
-          className="caret-transparent w-90 bg-red-700 p-5 mb-8 rounded-lg"
-          onClick={handleButtonClick}>
-            {isSignInForm 
-            ? "Sign In" 
-            : "Sign Up"}
+          <button
+            className="caret-transparent w-90 bg-red-700 p-5 mb-8 rounded-lg"
+            onClick={handleButtonClick}>
+            {isSignInForm
+              ? "Sign In"
+              : "Sign Up"}
           </button>
 
-          <p 
-          className="caret-transparent text-center mt-4 cursor-pointer" 
-          onClick={toggleSignInForm}>
-            {isSignInForm 
-            ? "New to Netflix? Sign Up Now" 
-            : "Already Registered? Sign In Now"
+          <p
+            className="caret-transparent text-center mt-4 cursor-pointer"
+            onClick={toggleSignInForm}>
+            {isSignInForm
+              ? "New to Netflix? Sign Up Now"
+              : "Already Registered? Sign In Now"
             }
           </p>
         </form>
