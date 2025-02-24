@@ -3,6 +3,7 @@ import Header from './Header'
 import UserAcc from './UserAcc'
  
  const Browse = () => {
+ 
    return (
      <div className="flex justify-between absolute px-15 w-screen   bg-gradient-to-b from-black z-10">
        <img
