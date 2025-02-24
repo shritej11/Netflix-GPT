@@ -4,6 +4,7 @@ import { checkValidateData } from "../utils/validate";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 import { useNavigate } from "react-router-dom";
+import { auth } from "../utils/firebase";
 
 
 
@@ -37,18 +38,15 @@ const Login = () => {
             displayName: name.current.value, 
             photoURL: "https://example.com/jane-q-user/profile.jpg"
           })
-            .then(() => {
+            .then(() => { 
               // Profile updated!
-             
-              navigate("/browse")
+            
             })
             .catch((error) => {
-              // An error occurred
-             
+              // An error occurred  
               setErrorMessage(error.message);
             });
-
-        })
+     })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
@@ -68,8 +66,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in 
           const user = userCredential.user;
-          console.log(user)
-          navigate("/browse")
         })
         .catch((error) => {
           const errorCode = error.code;

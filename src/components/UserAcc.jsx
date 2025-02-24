@@ -19,7 +19,7 @@ const UserAcc = () => {
     });
   }
   return (
-    <div className="bg-black text-left text-white rounded-xl absolute p-2 top-18 right-15 border-2 ">
+    <div className="bg-black/85 text-left text-white rounded-xl absolute p-2 top-14 right-13 border-2 ">
       <ul>
         <li className=" text-sm p-2 hover:underline">Account</li>
         <li className=" text-sm p-2 hover:underline">Help Center</li>
