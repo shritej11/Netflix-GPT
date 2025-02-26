@@ -3,15 +3,16 @@ import Header from "./Header";
 import { checkValidateData } from "../utils/validate";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 
-import { useNavigate } from "react-router-dom";
+
 import { auth } from "../utils/firebase";
+import { addUser } from "../utils/userSlice";
 
 
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
-  const navigate = useNavigate();
+  
 
   const name = useRef(null);
   const email = useRef(null);
@@ -39,11 +40,17 @@ const Login = () => {
             photoURL: "https://example.com/jane-q-user/profile.jpg"
           })
             .then(() => { 
-              // Profile updated!
-            
+              const { uid, email, displayName,photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
             })
             .catch((error) => {
-              // An error occurred  
               setErrorMessage(error.message);
             });
      })
@@ -56,8 +63,7 @@ const Login = () => {
 
     }
     else {
-      //sign in logic
-
+      
       signInWithEmailAndPassword(
         auth,
         email.current.value,
@@ -103,7 +109,7 @@ const Login = () => {
           onSubmit={(e) => e.preventDefault()}
           className="w-full min-h-[500px]  max-w-md p-10 bg-black/80 text-white rounded-4xl">
           <h1
-            className="caret-transparent text-3xl font-bold py-8">
+            className="caret-transparent font-Domine text-3xl font-bold py-8">
             {isSignInForm
               ? "Sign In"
               : "Sign Up"}
@@ -121,7 +127,7 @@ const Login = () => {
             ref={email}
             type="text"
             placeholder="Email Address"
-            className="bg-gray-700 p-3 px-3  w-90 rounded-lg mb-8"
+            className="bg-gray-700 p-3 px-3   w-90 rounded-lg mb-8"
           />
 
           <input
@@ -131,10 +137,10 @@ const Login = () => {
             className="bg-gray-700 p-3  px-3 w-90 rounded-lg mb-8"
           />
 
-          <p className="font-semibold text-white text-sm py-2 mb-1.5">{errorMessage}</p>
+          <p className=" font-semibold text-white text-sm py-2 mb-1.5">{errorMessage}</p>
 
           <button
-            className="caret-transparent w-90 bg-red-700 p-5 mb-8 rounded-lg"
+            className="caret-transparent font-Domine font-bold w-90 bg-red-700 p-5 mb-8 rounded-lg"
             onClick={handleButtonClick}>
             {isSignInForm
               ? "Sign In"
@@ -142,7 +148,7 @@ const Login = () => {
           </button>
 
           <p
-            className="caret-transparent text-center mt-4 cursor-pointer"
+            className="caret-transparent font-Domine text-center mt-4 cursor-pointer"
             onClick={toggleSignInForm}>
             {isSignInForm
               ? "New to Netflix? Sign Up Now"

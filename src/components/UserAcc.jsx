@@ -12,19 +12,19 @@ const UserAcc = () => {
   const handleSignOut = () => {
     signOut (auth).then(() => {
       // Sign-out successful.
-      navigate("/")
+      navigate("/");
     }).catch((error) => {
       // An error happened.
-      navigate("/error")
+      navigate("/error");
     });
   }
   return (
     <div className="bg-black/85 text-left text-white rounded-xl absolute p-2 top-14 right-13 border-2 ">
       <ul>
-        <li className=" text-sm p-2 hover:underline">Account</li>
-        <li className=" text-sm p-2 hover:underline">Help Center</li>
+        <li className="font-Domine text-sm p-2 hover:underline">Account</li>
+        <li className="font-Domine text-sm p-2 hover:underline">Help Center</li>
         <button onClick={handleSignOut}>
-          <li className=" p-2 text-sm border-t-1 hover:underline">Sign out of Netflix</li>
+          <li className="font-Domine p-2 text-sm border-t-1 hover:underline">Sign out of Netflix</li>
         </button>
       </ul>
     </div>
