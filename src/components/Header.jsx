@@ -37,7 +37,7 @@ const Header = () => {
   }, [])
 
   return (
-    <div className="flex justify-between absolute px-15  w-screen  py-2 bg-gradient-to-b from-black z-10">
+    <div className="caret-transparent flex justify-between absolute px-15  w-screen  py-2 bg-gradient-to-b from-black z-10">
       <img
         className="w-45 font-bold"
         src={LOGO}
