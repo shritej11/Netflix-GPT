@@ -8,10 +8,10 @@ const VideoBackground = ({ movieId }) => {
   useMovieTrailer(movieId);
 
   return (
-    <div className=" w-screen h-screen"> {/* This prevents scrolling */}
+    <div className=" w-full h-screen"> {/* This prevents scrolling */}
       {trailerVideo?.key && (
         <iframe 
-          className="top-0 left-0 object-cover w-screen h-screen pointer-events-none "
+          className="top-0 left-0 object-cover w-full  h-screen pointer-events-none "
           
           src={
             
