@@ -9,7 +9,7 @@ const UserDropDown = () => {
 
     return (
     
-        <div className="absolute px-15 caret-transparent flex justify-between w-full bg-gradient-to-b from-black ">
+        <div className="absolute z-50 px-15 caret-transparent flex justify-between w-full bg-gradient-to-b from-black ">
           <img
             className="w-45 font-bold"
             src={LOGO}

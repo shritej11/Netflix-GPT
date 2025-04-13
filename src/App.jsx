@@ -7,7 +7,9 @@ function App() {
   
 
   return (
-    <div>
+    <div
+     className="overflow-x-hidden relative"
+     >
       <Provider store= {appStore}>
         <Body/>
       </Provider>
